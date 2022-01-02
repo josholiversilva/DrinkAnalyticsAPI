@@ -1,0 +1,17 @@
+GET http://localhost:3000/drinks
+
+###
+
+GET http://localhost:3000/drinks/favorite/month
+
+###
+
+GET http://localhost:3000/drinks/favorite/year/3
+
+###
+
+GET http://localhost:3000/restaurants/favorite/month
+
+###
+
+GET http://localhost:3000/restaurants/favorite/month/3
