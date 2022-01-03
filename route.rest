@@ -22,7 +22,7 @@ Content-Type: application/json
 {
     "name": "matcha oolong milk tea",
     "cost": 4.50,
-    "restaurant": "sunright tea studio",
+    "restaurant": "new",
     "rating": 5.0
 }
 

@@ -10,42 +10,40 @@ exports.createNew = async (req, res) => {
     }
 
     // Get "Must Not Be NULL" keys for Drink Model
-    const requiredKeys = new Set();
-    requiredKeys.add("name")
-    requiredKeys.add("cost")
-    requiredKeys.add("restaurant")
-    requiredKeys.add("rating")
+    const missingRequiredKeys = new Set();
+    missingRequiredKeys.add("name")
+    missingRequiredKeys.add("cost")
+    missingRequiredKeys.add("restaurant")
+    missingRequiredKeys.add("rating")
 
-    // Check if any requiredKeys are null
+    // Check for missingRequiredKeys
     for (key in req.body) {
-        console.log(key, req.body[key])
-
-        // Get Restaurant ID from name
-        if (key === 'restaurant' && req.body[key] !== null) {
+        // Special Case: Get Restaurant ID from name
+        if (key === 'restaurant' && req.body[key] != null) {
             var restaurantID = await Restaurant.getIdByName(req.body['restaurant'])
+            if (restaurantID == null)
+                continue
             req.body['restaurantId'] = restaurantID
             console.log(`Restaurant ${req.body[key]} has id ${restaurantID}`)
-            requiredKeys.delete(key)
+            missingRequiredKeys.delete(key)
         }
-        else if (requiredKeys.has(key) && req.body[key] !== null) {
-            requiredKeys.delete(key)
+        // Existing required key mark
+        else if (missingRequiredKeys.has(key) && req.body[key] !== null) {
+            missingRequiredKeys.delete(key)
         }
     }
 
-    // Handle requiredKeys that must not be null
-    // & create a new Drink entry if user input all requiredKeys
-    if (requiredKeys.size !== 0) {
-        console.log(requiredKeys.size)
+    // Handle missingRequiredKeys: error if still missing otherwise
+    // create a new Drink entry if user input all requiredKeys
+    if (missingRequiredKeys.size !== 0) {
         res.status(400).send({
-            message: `Missing: ${Array.from(requiredKeys).join(',')}`
+            message: `Missing: ${Array.from(missingRequiredKeys).join(',')}`
         });
     }
     else {
         try {
             req.body['restaurantId'] = restaurantID
-            const drink = await Drink.create(req.body);
-            console.log(drink)
-            res.send(drink)
+            res.send(await Drink.create(req.body));
         }
         catch(err) {
             res.status(500).send({
@@ -54,7 +52,6 @@ exports.createNew = async (req, res) => {
             })
         }
     }
-    // await Drink.create()
 }
 
 exports.getAll = async (req, res) => {
@@ -71,8 +68,6 @@ exports.getAll = async (req, res) => {
 
 exports.getTopRated = async (req, res) => {
     try {
-        const top = await Drink.getTopRated()
-        console.log("controller top rated:", top)
         res.send(await Drink.getTopRated())
     }
     catch(err) {
@@ -90,7 +85,7 @@ exports.getTopCount = async (req, res) => {
     catch(err) {
         res.status(500).send({
             message:
-                err.message || "Some error occured when finding top rated Drink"
+                err.message || "Some error occured when finding most frequently bought Drink"
         })
     }
 }

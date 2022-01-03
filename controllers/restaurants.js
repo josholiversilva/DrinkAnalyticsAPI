@@ -9,6 +9,7 @@ exports.createNew = async (req, res) => {
 
     const restaurant = await Restaurant.create(req.body);
     console.log(restaurant)
+    res.send(restaurant)
 }
 
 exports.findById = async (req, res) => {

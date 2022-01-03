@@ -34,11 +34,9 @@ Restaurant.getIdByName = async (name) => {
             { type: Sequelize.QueryTypes.SELECT }
         )
     if (res.length > 0) {
-        console.log("In findByName: ", res[0].id)
         return res[0].id
     }
 
-    console.log("Could not find any restaurant with id: create new restaurant & get pic via yelp api")
     return null
 }
 
