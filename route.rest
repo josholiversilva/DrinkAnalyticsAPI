@@ -2,16 +2,48 @@ GET http://localhost:3000/drinks
 
 ###
 
-GET http://localhost:3000/drinks/favorite/month
+GET http://localhost:3000/restaurants/11
 
 ###
 
-GET http://localhost:3000/drinks/favorite/year/3
+POST http://localhost:3000/restaurants
+Content-Type: application/json
+
+{
+    "name": "ho lau sha",
+    "rating": 4.5
+}
 
 ###
 
-GET http://localhost:3000/restaurants/favorite/month
+POST http://localhost:3000/drinks
+Content-Type: application/json
+
+{
+    "name": "matcha oolong milk tea",
+    "cost": 4.50,
+    "restaurant": "sunright tea studio",
+    "rating": 5.0
+}
 
 ###
 
-GET http://localhost:3000/restaurants/favorite/month/3
+GET http://localhost:3000/drinks/top/rated/month
+
+###
+
+GET http://localhost:3000/drinks/top/count/month
+
+###
+
+GET http://localhost:3000/restaurants/top/count/year
+
+###
+
+GET http://localhost:3000/restaurants/top/rated/month
+
+# Got {DRINK} for {COST} from {RESTAURANT} on {DATE}
+
+###
+
+GET http://

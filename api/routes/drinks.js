@@ -1,33 +1,21 @@
+const drinksController = require('../controllers/drinks')
 const express = require('express')
 const router = express.Router();
 
-// Get All
-router.get('/', (req, res) => {
-    res.send('Hello World')
-})
+// Get All & create new drink
+router
+    .route("/")
+    .get(drinksController.getAll)
+    .post(drinksController.createNew)
 
-// Get Fave Drink With Time Type
-router.get('/favorite/:timeType', (req, res) => {
-    res.send(req.params)
-})
+// Get Top Rated Drink With Time Type
+router
+    .route('/top/rated/:timeType')
+    .get(drinksController.getTopRated)
 
-// Get One
-router.get('/:id', (req, res) => {
-    res.send(req.params)
-})
-
-// Create One
-router.post('/', (req, res) => {
-})
-
-// Update One
-router.patch('/:id', (req, res) => {
-    
-})
-
-// Delete One
-router.delete('/:id', (req, res) => {
-    
-})
+// Get Most Drinken Drink With Time Type
+router
+    .route('/top/count/:timeType')
+    .get(drinksController.getTopCount)
 
 module.exports = router
