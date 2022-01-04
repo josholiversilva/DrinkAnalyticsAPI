@@ -1,12 +1,12 @@
-GET http://localhost:3000/drinks
+GET http://localhost:3001/drinks
 
 ###
 
-GET http://localhost:3000/restaurants/11
+GET http://localhost:3001/restaurants/11
 
 ###
 
-POST http://localhost:3000/restaurants
+POST http://localhost:3001/restaurants
 Content-Type: application/json
 
 {
@@ -16,7 +16,17 @@ Content-Type: application/json
 
 ###
 
-POST http://localhost:3000/drinks
+PUT http://localhost:3001/restaurants
+Content-Type: application/json
+
+{
+    "restaurant": "ho lau sha",
+    "rating": 4.4
+}
+
+###
+
+POST http://localhost:3001/drinks
 Content-Type: application/json
 
 {
@@ -28,19 +38,19 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:3000/drinks/top/rated/month
+GET http://localhost:3001/drinks/top/rated/month
 
 ###
 
-GET http://localhost:3000/drinks/top/count/month
+GET http://localhost:3001/drinks/top/count/month
 
 ###
 
-GET http://localhost:3000/restaurants/top/count/year
+GET http://localhost:3001/restaurants/top/count/year
 
 ###
 
-GET http://localhost:3000/restaurants/top/rated/month
+GET http://localhost:3001/restaurants/top/rated/month
 
 # Got {DRINK} for {COST} from {RESTAURANT} on {DATE}
 

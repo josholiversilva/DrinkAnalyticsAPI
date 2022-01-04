@@ -4,10 +4,9 @@ const router = express.Router();
 
 router
     .route("/")
-    .get((req, res) => {
-        res.send('Hello World')
-    })
+    .get(restaurantsController.getAll)
     .post(restaurantsController.createNew)
+    .put(restaurantsController.update)
 
 router
     .route("/:id")
