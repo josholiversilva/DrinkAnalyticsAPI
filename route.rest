@@ -31,9 +31,9 @@ Content-Type: application/json
 
 {
     "name": "matcha oolong milk tea",
-    "cost": 4.50,
-    "restaurant": "new",
-    "rating": 5.0
+    "cost": 4.25,
+    "restaurant": "sunright tea studio",
+    "rating": 4.5
 }
 
 ###
@@ -42,7 +42,7 @@ GET http://localhost:3001/drinks/top/rated/month
 
 ###
 
-GET http://localhost:3001/drinks/top/count/month
+GET http://localhost:3001/drinks/month
 
 ###
 

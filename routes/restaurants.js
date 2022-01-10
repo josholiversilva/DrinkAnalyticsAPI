@@ -16,4 +16,8 @@ router
     .route("/top/count/:timeType")
     .get(restaurantsController.getTopCount)
 
+router
+    .route('/top/rated/:timeType')
+    .get(restaurantsController.getTopRated)
+
 module.exports = router

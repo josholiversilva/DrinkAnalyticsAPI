@@ -61,3 +61,15 @@ exports.findById = async (req, res) => {
 exports.getTopCount = async (req, res) => {
 
 }
+
+exports.getTopRated = async (req, res) => {
+    try {
+        res.send(await Restaurant.getTopRated(req.params.timeType))
+    }
+    catch(err) {
+        res.status(500).send({
+            message:
+                err.message || "Some error occured when finding top rated Drink"
+        })
+    }
+}

@@ -68,7 +68,7 @@ exports.getAll = async (req, res) => {
 
 exports.getTopRated = async (req, res) => {
     try {
-        res.send(await Drink.getTopRated())
+        res.send(await Drink.getTopRated(req.params.timeType))
     }
     catch(err) {
         res.status(500).send({
@@ -88,4 +88,8 @@ exports.getTopCount = async (req, res) => {
                 err.message || "Some error occured when finding most frequently bought Drink"
         })
     }
+}
+
+exports.getCount = async (req, res) => {
+    
 }

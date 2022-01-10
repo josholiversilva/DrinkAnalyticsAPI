@@ -40,4 +40,48 @@ Restaurant.getIdByName = async (name) => {
     return null
 }
 
+Restaurant.getTopRated = async (timeType) => {
+    if (timeType == 'month') {
+        const top = await sequelize
+            .query(
+                `SELECT * 
+                FROM restaurants 
+                WHERE MONTH(updated)=MONTH(CURRENT_DATE) 
+                ORDER BY rating DESC 
+                LIMIT 1`,
+                { type: Sequelize.QueryTypes.SELECT }
+            )
+        return top
+    }
+    else if (timeType == 'year') {
+        const top = await sequelize
+            .query(
+                `SELECT * 
+                FROM restaurants 
+                WHERE YEAR(updated)=YEAR(CURRENT_DATE) 
+                ORDER BY rating DESC 
+                LIMIT 1`,
+                { type: Sequelize.QueryTypes.SELECT }
+            )
+        console.log("Top Rated: ", top)
+        return top
+    }
+    else {
+        const top = await sequelize
+            .query(
+                `SELECT *
+                FROM restaurants 
+                WHERE updated between (SELECT DATE_SUB(updated, INTERVAL 1 WEEK)) 
+                AND 
+                (SELECT DATE_ADD(updated, INTERVAL 1 WEEK))
+                ORDER BY rating DESC
+                LIMIT 1
+                `,
+                { type: Sequelize.QueryTypes.SELECT }
+            )
+        console.log("Top Rated: ", top)
+        return top
+    }
+}
+
 module.exports = Restaurant;
