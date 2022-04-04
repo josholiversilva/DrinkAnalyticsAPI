@@ -30,9 +30,9 @@ POST http://localhost:3001/drinks
 Content-Type: application/json
 
 {
-    "name": "matcha oolong milk tea",
-    "cost": 4.25,
-    "restaurant": "sunright tea studio",
+    "name": "test tea",
+    "cost": 5.25,
+    "restaurant": "test restaurant",
     "rating": 4.5
 }
 

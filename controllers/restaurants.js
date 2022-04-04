@@ -9,7 +9,6 @@ exports.createNew = async (req, res) => {
 
     console.log(req.body)
 
-    req.body['name'] = req.body['restaurant']
     const restaurant = await Restaurant.create(req.body);
     console.log(restaurant)
     res.send(restaurant)
