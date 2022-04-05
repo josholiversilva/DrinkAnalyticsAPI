@@ -10,7 +10,7 @@ POST http://localhost:3001/restaurants
 Content-Type: application/json
 
 {
-    "name": "ho lau sha",
+    "name": "test restaurant",
     "rating": 4.5
 }
 
@@ -20,7 +20,7 @@ PUT http://localhost:3001/restaurants
 Content-Type: application/json
 
 {
-    "restaurant": "ho lau sha",
+    "restaurant": "test restaurant",
     "rating": 4.4
 }
 
@@ -56,4 +56,8 @@ GET http://localhost:3001/restaurants/top/rated/month
 
 ###
 
-GET http://
+GET http://localhost:3001/drinks/w/2022-02-04and2022-06-05
+###
+GET http://localhost:3001/drinks/m/04
+###
+GET http://localhost:3001/drinks/y/2022

@@ -69,9 +69,8 @@ Drink.getTopRated = async (timeType) => {
             .query(
                 `SELECT *
                 FROM drinks
-                WHERE date between (SELECT DATE_SUB(date, INTERVAL 1 WEEK)) 
-                AND 
-                (SELECT DATE_ADD(date, INTERVAL 1 WEEK))
+                WHERE date >= curdate() - INTERVAL DAYOFWEEK(curdate())+6 DAY
+                AND date < curdate() - INTERVAL DAYOFWEEK(curdate())-6 DAY;
                 ORDER BY rating DESC
                 LIMIT 1
                 `,
@@ -82,22 +81,33 @@ Drink.getTopRated = async (timeType) => {
     }
 }
 
-Drink.findAllWithDate = async (timeType) => {
+Drink.findAllWithDate = async (timeType, range) => {
     var top = {}
     if (timeType == 'y') {
-
+        top = await sequelize
+            .query(
+                `SELECT * FROM drinks WHERE YEAR(date)=${range}`,
+                { type: Sequelize.QueryTypes.SELECT }
+            )
     }
     else if (timeType == 'm') {
         top = await sequelize
             .query(
-                "SELECT * FROM drinks WHERE MONTH(date)=MONTH(CURRENT_DATE)",
+                `SELECT * FROM drinks WHERE MONTH(date)=${range}`,
                 { type: Sequelize.QueryTypes.SELECT }
             )
     }
     else {
+        // Should be in format of YYYY-MM-DD
+        const [prev,nxt] = range.split('and')
         top = await sequelize
             .query(
-                `SELECT * FROM drinks WHERE BETWEEN CURRENT_DATE() and weekEnd`
+                `SELECT *
+                FROM drinks
+                WHERE date 
+                BETWEEN "${prev}" AND "${nxt}"
+                `,
+                { type: Sequelize.QueryTypes.SELECT }
             )
     }
     console.log("Top Rated: ", top)

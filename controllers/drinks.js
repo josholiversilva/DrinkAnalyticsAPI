@@ -78,9 +78,10 @@ exports.getTopRated = async (req, res) => {
     }
 }
 
-exports.getTopCount = async (req, res) => {
+exports.getAllWithinDate = async (req, res) => {
     try {
-        res.send(await Drink.findAll())
+        console.log('GET ALL WITHIN DATE:', req.params.range)
+        res.send(await Drink.findAllWithDate(req.params.timeType, req.params.range))
     }
     catch(err) {
         res.status(500).send({
@@ -88,8 +89,4 @@ exports.getTopCount = async (req, res) => {
                 err.message || "Some error occured when finding most frequently bought Drink"
         })
     }
-}
-
-exports.getCount = async (req, res) => {
-    
 }

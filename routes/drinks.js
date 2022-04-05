@@ -8,12 +8,18 @@ router
     .get(drinksController.getAll)
     .post(drinksController.createNew)
 
+// Get All Drinks in a give time
+router
+    .route("/:timeType/:range")
+    .get(drinksController.getAllWithinDate)
+
 // Get Top Rated Drink With Time Type
 router
     .route('/top/rated/:timeType')
     .get(drinksController.getTopRated)
 
 // Get Most Drinken Drink With Time Type
+/*
 router
     .route('/top/count/:timeType')
     .get(drinksController.getTopCount)
@@ -21,5 +27,6 @@ router
 router
     .route('/cost/:timeType')
     .get(drinksController.getCount)
+*/
 
 module.exports = router
