@@ -22,7 +22,14 @@ const Drink = sequelize.define('drink', {
     restaurantId: {
         type: Sequelize.INTEGER,
         references: 'restaurants',
-        referencesKey: 'id'
+        referencesKey: 'id',
+        allowNull: false
+    },
+    userEmail: {
+        type: Sequelize.STRING,
+        references: 'users',
+        referencesKey: 'email',
+        allowNull: false
     },
     date: {
         type: Sequelize.DATE,

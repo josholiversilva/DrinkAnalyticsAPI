@@ -12,9 +12,11 @@ app.use(express.json())
 // Route middlewares
 const drinksRouter = require('./routes/drinks')
 const restaurantsRouter = require('./routes/restaurants')
+const usersRouter = require('./routes/users')
 
 app.use('/drinks', drinksRouter)
 app.use('/restaurants', restaurantsRouter)
+app.use('/users', usersRouter)
 
 app.listen(port);
 console.log('RESTFUL API for drink app on:', port);

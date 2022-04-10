@@ -1,6 +1,7 @@
 const Drink = require('../models/drinks')
 const Restaurant = require('../models/restaurants')
-const sequelize = require('sequelize')
+const sequelize = require('sequelize');
+const User = require('../models/users');
 
 exports.createNew = async (req, res) => {
     if (!req.body) {
@@ -9,48 +10,33 @@ exports.createNew = async (req, res) => {
         });
     }
 
-    // Get "Must Not Be NULL" keys for Drink Model
-    const missingRequiredKeys = new Set();
-    missingRequiredKeys.add("name")
-    missingRequiredKeys.add("cost")
-    missingRequiredKeys.add("restaurant")
-    missingRequiredKeys.add("rating")
+    const userEmail = await User.findByPk(req.body['userEmail'])
+    console.log('userEmail:', userEmail)
 
-    // Check for missingRequiredKeys
+    // Special Case: Get Restaurant ID from name & create if non-existent
     for (key in req.body) {
-        // Special Case: Get Restaurant ID from name
         if (key === 'restaurant' && req.body[key] != null) {
             var restaurantID = await Restaurant.getIdByName(req.body['restaurant'])
-            if (restaurantID == null)
-                continue
+            if (restaurantID == null) {
+                // var user = await User.create({name: req.body['user']['name'], email: req.body['user']['email'], gender: req.body['user']['gender']})
+                // console.log('userEmail:', user.dataValues.email)
+                var restaurant = await Restaurant.create({name: req.body['restaurant'], rating: req.body['rating'], userEmail: userEmail})
+                restaurantID = await restaurant.dataValues.id
+            }
             req.body['restaurantId'] = restaurantID
             console.log(`Restaurant ${req.body[key]} has id ${restaurantID}`)
-            missingRequiredKeys.delete(key)
-        }
-        // Existing required key mark
-        else if (missingRequiredKeys.has(key) && req.body[key] !== null) {
-            missingRequiredKeys.delete(key)
         }
     }
 
-    // Handle missingRequiredKeys: error if still missing otherwise
-    // create a new Drink entry if user input all requiredKeys
-    if (missingRequiredKeys.size !== 0) {
-        res.status(400).send({
-            message: `Missing: ${Array.from(missingRequiredKeys).join(',')}`
-        });
+    try {
+        req.body['restaurantId'] = restaurantID
+        res.send(await Drink.create(req.body));
     }
-    else {
-        try {
-            req.body['restaurantId'] = restaurantID
-            res.send(await Drink.create(req.body));
-        }
-        catch(err) {
-            res.status(500).send({
-                message:
-                    err.message || "Some error occured when creating new Drink"
-            })
-        }
+    catch(err) {
+        res.status(500).send({
+            message:
+                err.message || "Some error occured when creating new Drink"
+        })
     }
 }
 

@@ -6,18 +6,21 @@ const Restaurant = sequelize.define('restaurants', {
     id: {
         type: Sequelize.INTEGER, 
         primaryKey: true,
-        autoIncrement: true
+        autoIncrement: true,
+        allowNull: false
     },
     name: {
         type: Sequelize.STRING, 
         allowNull: false
     },
-    pic: {
-        type: Sequelize.STRING, 
-        defaultValue: "default"
-    },
     rating: {
-        type: Sequelize.FLOAT,
+        type: Sequelize.STRING, 
+        allowNull: false
+    },
+    userEmail: {
+        type: Sequelize.STRING,
+        references: 'users',
+        referencesKey: 'email',
         allowNull: false
     }
 }, {
@@ -36,7 +39,6 @@ Restaurant.getIdByName = async (name) => {
     if (res.length > 0) {
         return res[0].id
     }
-
     return null
 }
 
