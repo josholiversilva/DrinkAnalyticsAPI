@@ -2,6 +2,7 @@ const { Sequelize, QueryTypes } = require('sequelize');
 const sequelize = require('./db')
 const drinkModel = require('./drinks')
 const restaurantModel = require('./restaurants')
+const { v4: uuidv4 } = require('uuid');
 
 const User = sequelize.define('users', {
     email: {

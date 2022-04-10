@@ -88,6 +88,11 @@ Drink.getTopRated = async (timeType) => {
     }
 }
 
+Drink.findAllWithUserEmail = async (userEmail) => {
+    const res = await sequelize.query(`SELECT * from drinks WHERE userEmail='${userEmail}'`, { type: Sequelize.QueryTypes.SELECT })
+    return res
+}
+
 Drink.findAllWithDate = async (timeType, range) => {
     var top = {}
     if (timeType == 'y') {

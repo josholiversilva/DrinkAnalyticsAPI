@@ -34,7 +34,7 @@ Content-Type: application/json
     "cost": 5.25,
     "restaurant": "aaa",
     "rating": 4.5,
-    "userEmail": "yomama@yomama.com"
+    "userEmail": "guest@guest.com"
 }
 
 ###

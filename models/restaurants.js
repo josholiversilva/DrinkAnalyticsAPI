@@ -86,4 +86,9 @@ Restaurant.getTopRated = async (timeType) => {
     }
 }
 
+Restaurant.findAllWithUserEmail = async (userEmail) => {
+    const res = await sequelize.query(`SELECT * from restaurants WHERE userEmail='${userEmail}'`, { type: Sequelize.QueryTypes.SELECT })
+    return res
+}
+
 module.exports = Restaurant;

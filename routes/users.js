@@ -7,4 +7,12 @@ router
     .get(userController.getAll)
     .post(userController.createNew)
 
+router
+    .route("/:userEmail/drinks")
+    .get(userController.getAllUserDrinkData)
+
+router
+    .route("/:userEmail/restaurants")
+    .get(userController.getAllUserRestaurantData)
+
 module.exports = router

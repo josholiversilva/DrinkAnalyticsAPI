@@ -18,6 +18,16 @@ router
     .route('/top/rated/:timeType')
     .get(drinksController.getTopRated)
 
+// Get All Drinks for a user
+// router
+    // .route("/:userEmail")
+    // .get(drinksController.getAllUserData)
+
+// Get All Drinks for a user with time type
+// router
+    // .route("/:userEmail/:timeType/:range")
+    // .get(drinksController.getUserDataWithinDate)
+
 // Get Most Drinken Drink With Time Type
 /*
 router

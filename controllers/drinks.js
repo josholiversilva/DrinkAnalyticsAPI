@@ -10,8 +10,8 @@ exports.createNew = async (req, res) => {
         });
     }
 
-    const userEmail = await User.findByPk(req.body['userEmail'])
-    console.log('userEmail:', userEmail)
+    const user = await User.findByPk(req.body['userEmail'])
+    console.log('user:', user)
 
     // Special Case: Get Restaurant ID from name & create if non-existent
     for (key in req.body) {
@@ -20,7 +20,7 @@ exports.createNew = async (req, res) => {
             if (restaurantID == null) {
                 // var user = await User.create({name: req.body['user']['name'], email: req.body['user']['email'], gender: req.body['user']['gender']})
                 // console.log('userEmail:', user.dataValues.email)
-                var restaurant = await Restaurant.create({name: req.body['restaurant'], rating: req.body['rating'], userEmail: userEmail})
+                var restaurant = await Restaurant.create({name: req.body['restaurant'], rating: req.body['rating'], userEmail: user.dataValues.email})
                 restaurantID = await restaurant.dataValues.id
             }
             req.body['restaurantId'] = restaurantID
@@ -43,6 +43,18 @@ exports.createNew = async (req, res) => {
 exports.getAll = async (req, res) => {
     try {
         res.send(await Drink.findAll())
+    }
+    catch(err) {
+        res.status(500).send({
+            message:
+                err.message || "Some error occured when finding all Drinks"
+        })
+    }
+}
+
+exports.getAllUserData = async (req, res) => {
+    try {
+        res.send(await Drink.findAllWithUserEmail(req.params.userEmail))
     }
     catch(err) {
         res.status(500).send({
