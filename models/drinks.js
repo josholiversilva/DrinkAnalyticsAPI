@@ -126,4 +126,39 @@ Drink.findAllWithDate = async (timeType, range) => {
     return top
 }
 
+Drink.findAllUserDataWithDate = async (timeType, range, userEmail) => {
+    var top = {}
+    if (timeType == 'y') {
+        top = await sequelize
+            .query(
+                `SELECT * FROM drinks WHERE (YEAR(date)=${range} AND userEmail='${userEmail}')`,
+                { type: Sequelize.QueryTypes.SELECT }
+            )
+    }
+    else if (timeType == 'm') {
+        top = await sequelize
+            .query(
+                `SELECT * FROM drinks WHERE (MONTH(date)=${range} AND userEmail='${userEmail}')`,
+                { type: Sequelize.QueryTypes.SELECT }
+            )
+    }
+    else {
+        // Should be in format of YYYY-MM-DD
+        const [prev,nxt] = range.split('and')
+        top = await sequelize
+            .query(
+                `SELECT *
+                FROM drinks
+                WHERE date 
+                BETWEEN "${prev}" AND "${nxt}"
+                AND
+                userEmail='${userEmail}'
+                `,
+                { type: Sequelize.QueryTypes.SELECT }
+            )
+    }
+    console.log("Top Rated: ", top)
+    return top
+}
+
 module.exports = Drink;

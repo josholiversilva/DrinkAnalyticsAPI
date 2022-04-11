@@ -15,4 +15,8 @@ router
     .route("/:userEmail/restaurants")
     .get(userController.getAllUserRestaurantData)
 
+router
+    .route("/:userEmail/drinks/:timeType/:range")
+    .get(userController.getAllUserDrinkDataWithinDate)
+
 module.exports = router

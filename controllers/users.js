@@ -27,6 +27,18 @@ exports.getAllUserDrinkData = async (req, res) => {
     }
 }
 
+exports.getAllUserDrinkDataWithinDate = async (req, res) => {
+    try {
+        res.send(await Drink.findAllUserDataWithDate(req.params.timeType, req.params.range, req.params.userEmail))
+    }
+    catch(err) {
+        res.status(500).send({
+            message:
+                err.message || "Some error occured when finding all Drinks"
+        })
+    }
+}
+
 exports.getAllUserRestaurantData = async (req, res) => {
     try {
         res.send(await Restaurant.findAllWithUserEmail(req.params.userEmail))
